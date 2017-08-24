@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="cas" width="600" height="400" style="border: 1px solid black"></canvas>
+<script>
+    var cas = document.getElementById("cas");
+    var ctx = cas.getContext("2d");
+
+
+     var padding = 10;
+
+
+    
+    ctx.moveTo(padding,cas.height-padding);
+    console.log(cas.height-padding)
+    ctx.lineTo(cas.width-padding,cas.height-padding);
+
+
+   
+    ctx.moveTo(padding,cas.height-padding);
+    ctx.lineTo(padding,padding)
+
+    ctx.stroke()
+
+
+    var arrowHeight = 15;
+    var arrowWidth = 10;
+
+   
+    ctx.beginPath();
+    ctx.moveTo(cas.width-padding,cas.height-padding);
+    ctx.lineTo(cas.width-padding-arrowHeight,cas.height-padding-1/2*arrowWidth)
+
+    ctx.lineTo(cas.width-padding-.5*arrowHeight,cas.height-padding)
+
+
+     ctx.lineTo(cas.width-padding-arrowHeight,cas.height-padding+1/2*arrowWidth)
+    ctx.closePath()
+    ctx.fill()
+
+   
+    ctx.moveTo(padding,padding);
+    ctx.lineTo(padding-.5*arrowWidth,padding+arrowHeight)
+
+    ctx.lineTo(padding,padding+.5*arrowHeight)
+
+  
+    ctx.lineTo(padding+.5*arrowWidth,padding+arrowHeight)
+    ctx.closePath();
+    ctx.fill()
+   
+
+
+
+   
+    var data = [72,36,108,36,108];
+
+    
+    var sum = 0;
+    data.forEach(function(item){
+        sum+=item;
+    })
+
+   
+    var sum2 = data.reduce(function(start,end){
+        return start + end;
+    })
+
+    var sum3 = eval(data.join("+"));
+    
+    var data2 = data.map(function(item){
+        return item/sum3*360;
+    })
+
+
+    
+    function randomRGB(){
+      
+        var r = parseInt(Math.random()*255)
+        var g = parseInt(Math.random()*255)
+        var b = parseInt(Math.random()*255)
+        return "rgb("+r+","+g+","+b+")"
+    }
+
+    var startAngle = 0;
+    function toRadian(angle){
+        return Math.PI*angle/180
+    }
+    for(var i=0;i<data2.length;i++){
+        ctx.beginPath()
+        ctx.moveTo(cas.width/2,cas.height/2);
+        ctx.arc(cas.width/2,cas.height/2,100,toRadian(startAngle),toRadian(startAngle+=data2[i]));
+        ctx.closePath();
+        ctx.fillStyle = randomRGB();
+        ctx.fill()
+    }
+
+</script>
+</body>
+</html>
